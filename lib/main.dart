@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basic_lecture/checklist_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,12 +25,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void _moveView() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ChecklistView()));
   }
 
   @override
@@ -39,45 +36,18 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'You have pushed the button this many times:',
-                ),
-                Container(
-                  width: 20,
-                  height: 100,
-                  child: Icon(Icons.arrow_forward, size: 20),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xff000000), width: 2),
-                    // border: Border.all(color: Colors.black, width: 2),
-                  )
-                ),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ]
+        child: GestureDetector(
+          onTap: _moveView,
+          child: Container(
+            width: 40,
+            height: 40,
+            child: const Text('move'),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black)
             )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+          )
+        )
+      )
     );
   }
 }
