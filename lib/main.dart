@@ -49,6 +49,27 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'You have pushed the button this many times:',
+                ),
+                Container(
+                  width: 20,
+                  height: 100,
+                  child: Icon(Icons.arrow_forward, size: 20),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xff000000), width: 2),
+                    // border: Border.all(color: Colors.black, width: 2),
+                  )
+                ),
+                Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ]
+            )
           ],
         ),
       ),
