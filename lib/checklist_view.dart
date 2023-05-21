@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basic_lecture/checklist_item.dart';
 
 class ChecklistView extends StatefulWidget {
   @override
@@ -20,17 +21,9 @@ class _ChecklistView extends State<ChecklistView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              child: Text(todoList[0]),
-            ),
-            Container(
-              child: Text(todoList[1]),
-            ),
-            Container(
-              child: Text(todoList[2])
-            )
-          ]
+          children: List<Widget>.generate(todoList.length, (index) {
+            return ChecklistItem(text: todoList[index]);
+          })
         )
       )
     );
