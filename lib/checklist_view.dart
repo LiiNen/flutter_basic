@@ -34,8 +34,8 @@ class _ChecklistView extends State<ChecklistView> {
 
   void _checkTodoList(index) async {
     final pref = await SharedPreferences.getInstance();
-    checkList[index] = '1';
     setState(() {
+      checkList[index] = ((int.parse(checkList[index])+1)%2).toString();
       pref.setStringList('checkList', checkList);
     });
   }
