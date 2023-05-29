@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 
 class ChecklistItem extends StatefulWidget {
   final String text;
-  final dynamic callback;
-  ChecklistItem({required this.text, required this.callback});
+  final bool isChecked;
+  final dynamic checkCallback;
+  final dynamic deleteCallback;
+  ChecklistItem({required this.text, required this.isChecked, required this.checkCallback, required this.deleteCallback});
 
   @override
   State<ChecklistItem> createState() => _ChecklistItem();
 }
 
 class _ChecklistItem extends State<ChecklistItem> {
-  bool _isChecked = false;
-
-  void _check() {
-    setState(() {
-      _isChecked = !_isChecked;
-    });
+  void _check() async {
+    widget.checkCallback();
   }
 
   void _clear() {
-    widget.callback();
+    widget.deleteCallback();
   }
 
   @override
@@ -33,8 +31,8 @@ class _ChecklistItem extends State<ChecklistItem> {
           children: [
             Text(widget.text,
               style: TextStyle(
-                color: _isChecked ? Colors.grey : Colors.black,
-                decoration: _isChecked ? TextDecoration.lineThrough : null
+                color: widget.isChecked ? Colors.grey : Colors.black,
+                decoration: widget.isChecked ? TextDecoration.lineThrough : null
               )
             ),
             GestureDetector(

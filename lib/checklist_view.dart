@@ -11,11 +11,13 @@ class _ChecklistView extends State<ChecklistView> {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
   List<String> todoList = [];
+  List<String> checkList = [];
 
   void _loadTodoList() async {
     final pref = await SharedPreferences.getInstance();
     setState(() {
       todoList = pref.getStringList('todoList') ?? [];
+      checkList = pref.getStringList('checkList') ?? [];
     });
   }
 
@@ -23,8 +25,18 @@ class _ChecklistView extends State<ChecklistView> {
     final pref = await SharedPreferences.getInstance();
     setState(() {
       todoList.add(value);
+      checkList.add('0');
       pref.setStringList('todoList', todoList);
+      pref.setStringList('checkList', checkList);
       controller.text = '';
+    });
+  }
+
+  void _checkTodoList(index) async {
+    final pref = await SharedPreferences.getInstance();
+    checkList[index] = '1';
+    setState(() {
+      pref.setStringList('checkList', checkList);
     });
   }
 
@@ -32,7 +44,9 @@ class _ChecklistView extends State<ChecklistView> {
     final pref = await SharedPreferences.getInstance();
     setState(() {
       todoList.removeAt(index);
+      checkList.removeAt(index);
       pref.setStringList('todoList', todoList);
+      pref.setStringList('checkList', checkList);
     });
   }
 
@@ -51,7 +65,7 @@ class _ChecklistView extends State<ChecklistView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: List<Widget>.generate(todoList.length, (index) {
-            return ChecklistItem(text: todoList[index], callback: () {_deleteTodoList(index);});
+            return ChecklistItem(text: todoList[index], isChecked: checkList[index]=='1', checkCallback: () {_checkTodoList(index);}, deleteCallback: () {_deleteTodoList(index);});
           }) + <Widget>[
             TextField(
               controller: controller,
